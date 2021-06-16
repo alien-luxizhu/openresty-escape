@@ -26,4 +26,10 @@ openresty逃逸技术
 我正在研究，尚未实践。 通过openresty源代码发现，协程函数是被替换了，所以才不让跨ctx使用的。
 协程原来的函数仍然保留，只是被换了名字，名字前面全都加了下划线。
 
-等我有时间，用旧函数试试，应该没问题的。
+```
+local co_yield = coroutine._yield
+local co_create = coroutine._create
+local co_status = coroutine._status
+local co_resume = coroutine._resume
+```
+居然调用成功了， 也没发现有什么问题。 但是我仍然担心它们会影响父协程的调度。
